@@ -29,7 +29,7 @@ function init() {
     const geometryCube = new THREE.BoxGeometry(5, 5, 5);
     group = new THREE.Object3D();
 
-    textureCube = new THREE.TextureLoader().load('texture/crate2.jpg');
+    textureCube = new THREE.TextureLoader().load('texture/crate1.jpg');
 
     const materialCube = new THREE.MeshBasicMaterial({map: textureCube, overdraw: true});
 
