@@ -1,37 +1,48 @@
 // camera, scene, renderer 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer();
+let scene;
+let camera;
+let renderer;
+let group;
 
-scene.background = new THREE.Color(0xdddddd);
-document.body.appendChild(renderer.domElement);
+let textureCube;
+let loader;
 
-camera.position.z = 50;
+init();
+animate();
 
-console.log(scene);
-console.log(camera);
-console.log(renderer);
+function init() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
+    renderer = new THREE.WebGLRenderer();
 
-const points = [
-    new THREE.Vector2(1,1),
-    new THREE.Vector2(2,3),
-]
+    scene.background = new THREE.Color(0xdddddd);
+    document.body.appendChild(renderer.domElement);
 
-//const materialCube = new THREE.MeshBasicMaterial({color: 0x7fffb7});
-const materialCube = new THREE.MeshNormalMaterial();
-const geometryCube = new THREE.BoxGeometry(5, 5, 5);
-const group = new THREE.Object3D();
+    camera.position.z = 50;
 
-for (var i=0; i<100; i++) {
-    const cube = new THREE.Mesh(geometryCube, materialCube);
-    cube.position.x=Math.random()*100-50;
-    cube.position.y=Math.random()*100-50;
-    cube.position.z=Math.random()*100-50;
-    group.add(cube);
+    console.log(scene);
+    console.log(camera);
+    console.log(renderer);
+
+    //const materialCube = new THREE.MeshBasicMaterial({color: 0x7fffb7});
+    //const materialCube = new THREE.MeshNormalMaterial();
+    const geometryCube = new THREE.BoxGeometry(5, 5, 5);
+    group = new THREE.Object3D();
+
+    textureCube = new THREE.TextureLoader().load('texture/crate2.jpg');
+
+    const materialCube = new THREE.MeshBasicMaterial({map: textureCube, overdraw: true});
+
+    for (var i=0; i<100; i++) {
+        const cube = new THREE.Mesh(geometryCube, materialCube);
+        cube.position.x=Math.random()*100-50;
+        cube.position.y=Math.random()*100-50;
+        cube.position.z=Math.random()*100-50;
+        group.add(cube);
+    }
+
+    scene.add(group)
 }
-
-scene.add(group)
-
 function animate() {
     requestAnimationFrame(animate);
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -40,5 +51,3 @@ function animate() {
     group.rotation.y += 0.01;
     renderer.render(scene, camera);
 }
-
-animate();
