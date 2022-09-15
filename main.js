@@ -6,7 +6,7 @@ const renderer = new THREE.WebGLRenderer();
 scene.background = new THREE.Color(0xdddddd);
 document.body.appendChild(renderer.domElement);
 
-camera.position.z = 5;
+camera.position.z = 50;
 
 console.log(scene);
 console.log(camera);
@@ -19,7 +19,7 @@ const points = [
 
 //const materialCube = new THREE.MeshBasicMaterial({color: 0x7fffb7});
 const materialCube = new THREE.MeshNormalMaterial();
-const geometryCube = new THREE.BoxGeometry(1, 1, 1);
+const geometryCube = new THREE.BoxGeometry(10, 10, 10);
 const cube = new THREE.Mesh(geometryCube, materialCube);
 cube.rotation.x = 0.3;
 scene.add(cube);
@@ -30,9 +30,10 @@ scene.add(ambientLight);
 function animate() {
     requestAnimationFrame(animate);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.render(scene, camera);
     camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
     cube.rotation.y += 0.01;
+    renderer.render(scene, camera);
 }
 
 animate();
