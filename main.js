@@ -19,20 +19,25 @@ const points = [
 
 //const materialCube = new THREE.MeshBasicMaterial({color: 0x7fffb7});
 const materialCube = new THREE.MeshNormalMaterial();
-const geometryCube = new THREE.BoxGeometry(10, 10, 10);
-const cube = new THREE.Mesh(geometryCube, materialCube);
-cube.rotation.x = 0.3;
-scene.add(cube);
+const geometryCube = new THREE.BoxGeometry(5, 5, 5);
+const group = new THREE.Object3D();
 
-const ambientLight = new THREE.AmbientLight(0xffffff)
-scene.add(ambientLight);
+for (var i=0; i<100; i++) {
+    const cube = new THREE.Mesh(geometryCube, materialCube);
+    cube.position.x=Math.random()*100-50;
+    cube.position.y=Math.random()*100-50;
+    cube.position.z=Math.random()*100-50;
+    group.add(cube);
+}
+
+scene.add(group)
 
 function animate() {
     requestAnimationFrame(animate);
     renderer.setSize(window.innerWidth, window.innerHeight);
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    cube.rotation.y += 0.01;
+    group.rotation.y += 0.01;
     renderer.render(scene, camera);
 }
 
